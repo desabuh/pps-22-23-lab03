@@ -16,13 +16,13 @@ object Tasks {
 
   @tailrec
   def drop[A](l: List[A], n: Int): List[A] = (l, n) match
-    case (Nil(), _) => Nil()
     case (Cons(h, t), n) => if n == 0 then Cons(h, t) else drop(t, n - 1)
+    case (Nil(), _) => Nil()
 
   def append[A](left: List[A], right: List[A]): List[A] = (left, right) match
-    case (Nil(), right) => right
     case (Cons(h, Nil()), right) => Cons(h, right)
     case (Cons(h, t), right) => append(Cons(h, Nil()), append(t, right))
+    case (_, right) => right
 
   def flatMap[A, B](l: List[A])(f: A => List[B]): List[B] = l match
     case Cons(h, t) => append(f(h), flatMap(t)(f))
